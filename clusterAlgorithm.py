@@ -12,7 +12,7 @@ class ClusterAlgorithm:
 
     def setArray(self, file):
         for x, line in enumerate(file):
-            if x > 2:
+            if x > 0:
                 first_int = ""
                 second_int = ""
                 first_finished = False
@@ -29,5 +29,8 @@ class ClusterAlgorithm:
 
 
 
-    def Print(self):
-        
+    def Print(self, file_name):
+        f = open(file_name, "w")
+        for x in range(0,len(self.coordinates)):
+            f.write("{}\t{}\t{}\n".format(self.coordinates[x][0] ,self.coordinates[x][1] , self.coordinates[x][2]))
+        f.close()
