@@ -1,5 +1,4 @@
-import math
-import random
+from sklearn.cluster import KMeans
 
 class ClusterAlgorithm:
 
@@ -26,41 +25,19 @@ class ClusterAlgorithm:
                             second_int = second_int + char
                     else:
                         first_finished = True
-                self.coordinates.append([int(first_int), int(second_int), 0])
+                self.coordinates.append([int(first_int), int(second_int)])
 
-    #creates a list of k amount of random points, where x-axis ranges between 0-1000 and y-axis ranges from 0-500
     def cluster_algorithm(self):
-        ran_points = []
-        for x in range(self.k):
-            ran_points.append([random.randrange(1000),random.randrange(500)])
-        finished = False
-        while not finished:
-            for x in range(len(self.coordinates)):
-                farthest = 0
-                for i in range(self.k):
-                    dis = int(math.sqrt((self.coordinates[x][0] - ran_points[i][0])**2
-                                    + (self.coordinates[x][1] - ran_points[i][1])**2))
-                    if dis > farthest:
-                        self.coordinates[x][2] = i+1
-                        farthest = dis
-
-            for y in range(self.k):
-                new_point = []
-                new_x = 0
-                new_y = 0
-                sum   = 0
-                for j in range(len(self.coordinates)):
-                    if self.coordinates[j][2] == y+1:
-                        new_x += self.coordinates[j][0]
-                        new_y += self.coordinates[j][1]
-                        sum += 1
-                new_point.append([int(new_x/sum), int(new_y/sum)])
-
-            if new_point != ran_points:
-                
+        kmeans = KMeans(n_clusters=self.k)
+        kmeans.fit(self.coordinates)
+        self.labels = kmeans.labels_
 
     def Print(self, file_name):
         f = open(file_name, "w")
-        for x in range(0,len(self.coordinates)):
-            f.write("{}\t{}\t{}\n".format(self.coordinates[x][0] ,self.coordinates[x][1] , self.coordinates[x][2]))
+        counter = 0
+        while counter < self.k:
+            for x in range(0,len(self.coordinates)):
+                if self.labels[x] == counter:
+                    f.write("{}\t{}\t{}\n".format(self.coordinates[x][0] ,self.coordinates[x][1] , self.labels[x] + 1))
+            counter += 1
         f.close()
