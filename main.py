@@ -1,9 +1,9 @@
 import clusterAlgorithm
 
 def main():
-    test = clusterAlgorithm.ClusterAlgorithm("test.txt")
-    test.cluster_algorithm()
-    test.Print("outputTest.txt")
+#    test = clusterAlgorithm.ClusterAlgorithm("test.txt")
+#    test.cluster_algorithm()
+#    test.Print("outputTest.txt")
 
     input1 = clusterAlgorithm.ClusterAlgorithm("input1.txt")
     input1.cluster_algorithm()
