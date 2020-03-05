@@ -1,7 +1,6 @@
 import random
 import math
 
-
 class ClusterAlgorithm:
     x_pnts = []
     y_pnts = []
@@ -55,9 +54,7 @@ class ClusterAlgorithm:
                 self.centroids_y.append(self.y_pnts[choice])
 
     def cluster_algorithm(self):
-        count = 0
         finished = False
-
         while not finished:
             for q in range(self.size):
                 distance = []
@@ -88,14 +85,15 @@ class ClusterAlgorithm:
                 new_x_pnt.append(round(new_x / sum, 2))
                 new_y_pnt.append(round(new_y / sum, 2))
 
-            if count == 2:
-                finished = True
+            if self.centroids_x.sort() == new_x_pnt.sort():
+                if self.centroids_y.sort() == new_y_pnt.sort():
+                    finished = True
+
             for n in range(self.k):
                 self.centroids_x[n] = new_x_pnt[n]
                 self.centroids_y[n] = new_y_pnt[n]
             new_x_pnt.clear()
             new_y_pnt.clear()
-            count += 1
 
     def Print(self, file_name):
         f = open(file_name, "w")
